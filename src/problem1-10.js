@@ -58,8 +58,7 @@ const primeFactors = (n) => {
         }
         const lastKnownFactor = R.defaultTo(R.last(factors), 2);
         const nextPrimeFactor = findPrimeFactorStartingFrom(lastKnownFactor, n);
-        const nextNumber = R.until(R.complement(isDivisibleBy(nextPrimeFactor)), R.divide(R.__, nextPrimeFactor), n);
-        return _primeFactors(nextNumber, factors.concat(nextPrimeFactor));
+        return _primeFactors(n / nextPrimeFactor, factors.concat(nextPrimeFactor));
     }
 
     return _primeFactors(n, []);
