@@ -82,11 +82,10 @@ const multiplyPair = ([a, b]) => a * b;
 const findLargestPalindrome = (max) => {
     return R.pipe(
         R.converge(R.xprod, [R.range(1), R.range(1)]),
-        R.filter(([a, b]) => isPalindrome(a * b)),
+        R.map(multiplyPair),
+        R.filter(isPalindrome),
         // @ts-ignore
-        R.sortBy(multiplyPair),
-        R.reverse,
-        R.head
+        R.sortBy(R.identity),
     )
         // @ts-ignore
         (max);
