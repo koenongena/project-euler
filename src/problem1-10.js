@@ -77,18 +77,13 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 
 const isPalindrome = (n) => R.equals(n.toString(), R.reverse(n.toString()));
 
-const multiplyPair = ([a, b]) => a * b;
-
 const findLargestPalindrome = (max) => {
     return R.pipe(
         R.converge(R.xprod, [R.range(1), R.range(1)]),
-        R.map(multiplyPair),
-        R.filter(isPalindrome),
-        // @ts-ignore
-        R.sortBy(R.identity),
-    )
-        // @ts-ignore
-        (max);
+        R.map(([a, b]) => a * b),
+        R.sort(R.descend(R.identity)),
+        R.find(isPalindrome),
+    )(max);
 };
 
 (() => {
@@ -98,6 +93,6 @@ const findLargestPalindrome = (max) => {
 
     console.log("Problem 3: " + R.apply(Math.max, primeFactors(600851475143)));
 
-    console.log("Problem 4: " + multiplyPair(findLargestPalindrome(1000)));
+    console.log("Problem 4: " + findLargestPalindrome(1000));
     // console.log("Problem 4: " + evenlyDivisble(findLargestPalindrome(1000)));
 })();
