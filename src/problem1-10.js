@@ -6,8 +6,8 @@ Problem 1: Multiples of 3 and 5
  */
 
 import * as R from "ramda";
+import {isDivisibleBy} from "./math";
 
-const isDivisibleBy = R.curry((denominator, number) => number % denominator === 0);
 const isDivisibleByAny = (a) => R.anyPass(R.map(isDivisibleBy, a))
 const isDivisibleBy3Or5 = isDivisibleByAny([3, 5]);
 
@@ -47,22 +47,6 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 What is the largest prime factor of the number 600851475143 ?
 */
 
-const primeFactors = (n) => {
-    const findPrimeFactorStartingFrom = (primeFactor, n) => {
-        return R.until(isDivisibleBy(R.__, n), R.inc, primeFactor);
-    }
-
-    const _primeFactors = (n, factors) => {
-        if (n === 1) {
-            return factors;
-        }
-        const lastKnownFactor = R.defaultTo(R.last(factors), 2);
-        const nextPrimeFactor = findPrimeFactorStartingFrom(lastKnownFactor, n);
-        return _primeFactors(n / nextPrimeFactor, factors.concat(nextPrimeFactor));
-    }
-
-    return _primeFactors(n, []);
-};
 
 /*
 Largest palindrome product
