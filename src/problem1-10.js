@@ -6,7 +6,7 @@ Problem 1: Multiples of 3 and 5
  */
 
 import * as R from "ramda";
-import {isDivisibleBy} from "./math";
+import {isDivisibleBy, lcm, primeFactors} from "./math.js";
 
 const isDivisibleByAny = (a) => R.anyPass(R.map(isDivisibleBy, a))
 const isDivisibleBy3Or5 = isDivisibleByAny([3, 5]);
@@ -77,5 +77,6 @@ const findLargestPalindrome = (max) => {
     console.log("Problem 3: " + R.apply(Math.max, primeFactors(600851475143)));
 
     console.log("Problem 4: " + findLargestPalindrome(1000));
-    // console.log("Problem 4: " + evenlyDivisble(findLargestPalindrome(1000)));
+
+    console.log("Problem 5: " + R.reduce(lcm, 1, R.range(1, 20)))
 })();

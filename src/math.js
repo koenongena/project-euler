@@ -1,10 +1,10 @@
-import R = require("ramda");
+import * as R from "ramda";
 
 export const pow = R.curry(R.flip(Math.pow));
 export const sqr = pow(2);
 export const sqrt = Math.sqrt;
 
-export const lcm = (a: number, b: number) => {
+export const lcm = (a, b) => {
     if (a === 1 || b === 1) {
         return a * b;
     }
@@ -14,7 +14,7 @@ export const lcm = (a: number, b: number) => {
         R.countBy(R.toString, primeFactors(b))
     );
 
-    const primeToExponent = (exponent, prime) => Math.pow(parseInt(prime, 10), exponent as number);
+    const primeToExponent = (exponent, prime) => Math.pow(parseInt(prime, 10), exponent);
     const exponentValues = R.values(
         R.mapObjIndexed(primeToExponent, primes)
     );
