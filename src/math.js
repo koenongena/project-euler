@@ -40,3 +40,4 @@ export const primeFactors = (n) => {
 
     return _primeFactors(n, []);
 };
+export const isEven = (n) => n % 2 === 0;
