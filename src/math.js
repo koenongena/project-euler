@@ -41,3 +41,10 @@ export const primeFactors = (n) => {
     return _primeFactors(n, []);
 };
 export const isEven = (n) => n % 2 === 0;
+
+export const factorial = (n, acc = 1) => {
+    if (n === 1) {
+        return acc;
+    }
+    return factorial(n - 1, acc * n);
+}
