@@ -48,3 +48,5 @@ export const factorial = (n, acc = 1) => {
     }
     return factorial(n - 1, acc * n);
 }
+
+export const rangeInclusive = (min, max) => R.range(min, max + 1);
