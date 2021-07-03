@@ -25,9 +25,14 @@ export const lcm = (a, b) => {
 export const isDivisibleBy = R.curry((denominator, number) => number % denominator === 0);
 
 export const primeFactors = (n) => {
+    if (n === 0) {
+        return 0;
+    } else if (n < 0) {
+        return R.map(R.multiply(-1), primeFactors(n * -1));
+    }
     const findPrimeFactorStartingFrom = (primeFactor, n) => {
         return R.until(isDivisibleBy(R.__, n), R.inc, primeFactor);
-    }
+    };
 
     const _primeFactors = (n, factors) => {
         if (n === 1) {
@@ -50,3 +55,21 @@ export const factorial = (n, acc = 1) => {
 }
 
 export const rangeInclusive = (min, max) => R.range(min, max + 1);
+
+const cachedPrimes = () => {
+    const cache = new Map();
+
+    return (n) => {
+        if (n % 2 === 0) {
+            return false;
+        }
+        if (!cache.has(n)) {
+            const factors = primeFactors(n);
+            cache.set(n, factors.length === 1);
+        }
+        return cache.get(n)
+    };
+
+};
+export const isPrime = cachedPrimes();
+export const isNotPrime = R.complement(isPrime);

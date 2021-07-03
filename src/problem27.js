@@ -1,21 +1,27 @@
 import * as R from 'ramda';
-import {primeFactors} from "./math.js";
+import {isNotPrime} from "./math.js";
 
 const quadraticFormula = R.curry(((a, b, n) => {
-    console.log(n, a, b)
     return n * n + a * n + b;
 }));
 
-const isPrime = (n) => {
-    const factors = primeFactors(n);
-    console.log(n, "->", factors);
-    return factors.length === 1;
+
+function numberOfConsecutivePrimes(a, b) {
+    return R.until(R.pipe(quadraticFormula(a, b), isNotPrime), R.inc, 0) - 1;
 }
 
-const isNotPrime = R.complement(isPrime);
-
 (() => {
-    const a = 1, b = 41;
-    const final = R.until(R.pipe(quadraticFormula(a, b), isNotPrime), R.inc, 0);
-    console.log(final);
+    let maxNumberOfPrimes = 0;
+    let result = 0;
+    for (let a = -999; a < 1000; a++) {
+        for (let b = -1000; b <= 1000; b++) {
+            const numberOfPrimes = numberOfConsecutivePrimes(a, b);
+            if (maxNumberOfPrimes < numberOfPrimes) {
+                maxNumberOfPrimes = numberOfPrimes;
+                result = a * b;
+            }
+        }
+    }
+
+    console.log(result);
 })();
