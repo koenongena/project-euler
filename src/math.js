@@ -45,6 +45,12 @@ export const primeFactors = (n) => {
 
     return _primeFactors(n, []);
 };
+
+
+export const exponentialForm = (arr) => {
+    return R.countBy(R.identity, arr);
+}
+
 export const isEven = (n) => n % 2 === 0;
 
 export const factorial = (n, acc = 1) => {
