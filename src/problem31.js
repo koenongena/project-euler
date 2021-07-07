@@ -6,7 +6,7 @@ const countSolutions = (coins, target) => {
     
     const firstCoin = R.head(coins)
     let solutions = 0;
-    
+
     let numberOfCoins = 0;
     const remainingCoins = R.tail(coins);
     while (firstCoin * numberOfCoins < target) {
@@ -18,9 +18,20 @@ const countSolutions = (coins, target) => {
     return solutions;
 }
 
+const countWithDynamicProgramming = (coins, target) => {
+    const waysToGetToAmount = Array.from({length: target + 1}, () => 0)
+    waysToGetToAmount[0] = 1;
+    for (const coin of coins) {    
+        for (let j = coin; j <= target; j++){
+            waysToGetToAmount[j] += waysToGetToAmount[j - coin];
+        }
+    };
+    return waysToGetToAmount[target];
+}
+
 (() => {
     const coins = [1, 2, 5, 10, 20, 50, 100, 200];
     const target = 200;
 
-    console.log(countSolutions(coins, target));
+    console.log(countWithDynamicProgramming(coins, target));
 })()
