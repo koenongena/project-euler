@@ -6,6 +6,7 @@ const numberOfDigitsArePossible = (n1, n2) => {
     const m = n2.toString().length;
     return n + m + (n + m) === 10
 }
+
 export const isPanDigitalProduct = (multiplicand, multiplier) => {
     if (!numberOfDigitsArePossible(multiplicand, multiplier)
         || !isNumberWithUniqueDigits(multiplicand)
@@ -15,8 +16,7 @@ export const isPanDigitalProduct = (multiplicand, multiplier) => {
 
     const product = multiplicand * multiplier;
     const concatenated = '' + multiplicand + '' + multiplier + '' + product;
-    const counts = R.countBy(R.identity, R.split('', concatenated));
-    return !R.includes('0', concatenated) && R.range(1, 10).every(number => counts['' + number] === 1);
+    return concatenated.split('').sort().join('') === "123456789";
 }
 
 (() => {
@@ -26,8 +26,12 @@ export const isPanDigitalProduct = (multiplicand, multiplier) => {
     // That would be 9876
     const MAX_MULTIPLIER = 9876;
 
+    // Because the inner loop contains all the 4 digit number, we are certain those are already covered.
+    // Only the 1 and 2 digit number need to be brute forced
+    const MAX_MULTIPLICAND = 98;
+
     const set = new Set();
-    for (let i = 1; i <= MAX_MULTIPLIER; i++) {
+    for (let i = 1; i <= MAX_MULTIPLICAND; i++) {
         for (let j = i + 1; j <= MAX_MULTIPLIER - i; j++) {
             if (isPanDigitalProduct(i, j)) {
                 console.log(i, j, i * j);
