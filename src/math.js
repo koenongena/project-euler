@@ -64,10 +64,26 @@ export const factorial = (n, acc = 1) => {
 
 export const rangeInclusive = (min, max) => R.range(min, max + 1);
 
+export const sieveOfErathostenes = (length = 1_000_000) => {
+    const array = Array(length).fill(true);
+    for (let i = 2; i <= Math.sqrt(length); i++) {
+        if (array[i]) {
+            for (let j = i * i; j < length; j += i) array[j] = false
+        }
+    }
+    return array;
+}
+
+export const primes = sieveOfErathostenes;
+
 const cachedPrimes = () => {
     const cache = new Map();
+    const sieve = sieveOfErathostenes(10_000_000);
 
     return (n) => {
+        if (sieve.length > n) {
+            return sieve[n];
+        }
         if (n % 2 === 0) {
             return false;
         }

@@ -1,3 +1,6 @@
+import {permutations} from "./arrays.js";
+import * as R from 'ramda';
+
 const parseDecimal = c => parseInt(c, 10);
 
 export const digits = (n) => {
@@ -20,3 +23,16 @@ export const containsUniqueDigits = (number) =>  {
 }
 
 export const isNumberWithUniqueDigits = containsUniqueDigits;
+
+export const digitRotations = (number) => {
+    const _digitRotations = (n, list) => {
+        const [head, ...tail] = n;
+        const next = tail.join('') + head;
+        if (R.includes(next, list)) {
+            return list.map(s => parseInt(s, 10));
+        }
+        return _digitRotations(next, R.append(next, list));
+    }
+
+    return _digitRotations(number.toString(), [number.toString()])
+};
