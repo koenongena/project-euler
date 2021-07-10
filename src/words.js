@@ -7,3 +7,10 @@ export const alphabeticalValue = R.pipe(
     R.map(toCharCode),
     R.sum
 );
+
+export const isPalindrome = (s) => {
+    if (R.length(s) <= 1) {
+        return true;
+    }
+    return R.head(s) === R.last(s) && isPalindrome(R.slice(1, -1, s));
+}
